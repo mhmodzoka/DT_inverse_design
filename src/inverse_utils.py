@@ -63,10 +63,23 @@ def init_sample_lims(X):
     if 'LongDim' in feature_names:
         min_max_dict['LongDim'] = [X['LongDim'].min()*0.95,X['LongDim'].max()*1.05]
         print("LongDim Initial Range: {0}".format(min_max_dict['LongDim']))
+
+    if 'log ShortestDim' in feature_names:
+        min_max_dict['log ShortestDim'] = [X['log ShortestDim'].min()*0.95,X['log ShortestDim'].max()*1.05]
+        print("log ShortestDim Initial Range: {0}".format(min_max_dict['log ShortestDim']))
+        
+    if 'log MiddleDim' in feature_names:
+        min_max_dict['log MiddleDim'] = [X['log MiddleDim'].min()*0.95,X['log MiddleDim'].max()*1.05]
+        print("log MiddleDim Initial Range: {0}".format(min_max_dict['log MiddleDim']))
+        
+    if 'log LongDim' in feature_names:
+        min_max_dict['log LongDim'] = [X['log LongDim'].min()*0.95,X['log LongDim'].max()*1.05]
+        print("log LongDim Initial Range: {0}".format(min_max_dict['log LongDim']))
         
     if 'ShortToLong' in feature_names:
         min_max_dict['ShortToLong'] = [0.0,1.0]
         print("ShortToLong Initial Range: {0}".format(min_max_dict['ShortToLong']))
+    
     if 'MidToLong' in feature_names:
         min_max_dict['MidToLong'] = [0.0,1.0]
         print("MidToLong Initial Range: {0}".format(min_max_dict['MidToLong']))
@@ -999,6 +1012,7 @@ def generate_samples_from_lims_Elzouka_2(min_max_dict,n,X_test_feature_names, ro
     =======
     
     """
+    # TODO: make it work for "log ShortestDim", "log MiddleDim", "log LongDim"
     feature_names = list(min_max_dict.keys())    
     gen_features_sample = pd.DataFrame(columns= feature_names )
     
@@ -1042,10 +1056,34 @@ def generate_samples_from_lims_Elzouka_2(min_max_dict,n,X_test_feature_names, ro
         
     # based on ranges in min_max_dict, check possibility of creating a valid geometry, for every allowed geometry
     valid_geom_list = []
-    Shrt = min_max_dict['ShortestDim']
-    Mdl = min_max_dict['MiddleDim']
-    Lng = min_max_dict['LongDim']
+    if 'ShortestDim' in min_max_dict:
+        Shrt = min_max_dict['ShortestDim']
+    elif 'log ShortestDim' in min_max_dict:
+        min_max_dict['ShortestDim'] = np.exp(min_max_dict['log ShortestDim'])
+        Shrt = np.exp(min_max_dict['log ShortestDim'])
+    else:
+        raise ValueError('min_max_dict needs to have either "ShortestDim" or "log ShortestDim"')
+
+    if 'MiddleDim' in min_max_dict:
+        Mdl = min_max_dict['MiddleDim']
+    elif 'log MiddleDim' in min_max_dict:
+        min_max_dict['MiddleDim'] = np.exp(min_max_dict['log MiddleDim'])
+        Mdl = np.exp(min_max_dict['log MiddleDim'])
+    else:
+        raise ValueError('min_max_dict needs to have either "MiddleDim" or "log MiddleDim"')
+
+    if "LongDim" in min_max_dict:
+        Lng = min_max_dict['LongDim']
+    elif "log LongDim" in min_max_dict:
+        min_max_dict['LongDim'] = np.exp(min_max_dict['log LongDim'])
+        Lng = np.exp(min_max_dict['log LongDim'])
+    else:
+        raise ValueError('min_max_dict needs to have either "LongDim" or "log LongDim"')
+    
     AV = min_max_dict['Area/Vol']
+
+    feature_names = list(min_max_dict.keys())    
+
     for geom_here in allowed_geom_list:
         if "sphere" in geom_here:            
             D_range = z_range_intrsct_ranges((Shrt,Mdl, Lng))            
