@@ -215,7 +215,7 @@ if InverseDesign_spectral:
         
     if ChooseRandomFromTest_eachMat:
         ## inverse design for data in y_test #        
-        feature_names = X_train_here.columns        
+        feature_names = X_train.columns        
         feature_set_mat = [x for x in feature_names if "Material" in x]
         
         # Do the inverse design for each geometry        
