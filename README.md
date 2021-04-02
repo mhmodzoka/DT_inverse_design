@@ -9,6 +9,7 @@ https://www.sciencedirect.com/science/article/pii/S2666386420302812
 
 # How to run?
 The first step, run the file "src/forward.py" to create the forward ML models (DT, RF and DTGEN), which will be saved in "./cache"
+
 The second step, run the file "src/inverse.py" to perform the inverse design.
 
 
