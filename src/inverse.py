@@ -91,10 +91,10 @@ sclar_or_spectral = 'scalar'
 
 bestdesign_method =  'absolute_best' #'MorethanOneMatGeom' #
 
-#InverseDesignModels_folder = 'latest' # here, input the string 'latest' to use the latest models, or input the folder of the latest model relative to the current folder
+InverseDesignModels_folder = 'latest' # here, input the string 'latest' to use the latest models, or input the folder of the latest model relative to the current folder
 #InverseDesignModels_folder = '../cache/results_20191029_174223_smi_final/'
 #InverseDesignModels_folder = '../cache/r20191103_145953_20.0sc_20.0sp/'
-InverseDesignModels_folder = '../cache/r20191106_173403_50.0sc_50.0sp/'
+#InverseDesignModels_folder = '../cache/r20191106_173403_50.0sc_50.0sp/'
 #InverseDesignModels_folder = '../cache/r20191112_103049_50.0sc_50.0sp/'
 
 #in case we need to display design rules for a number of leaves. If we really need a neat inverse design, set this to -1
@@ -394,3 +394,4 @@ if feature_importance_permutation:
                 plt.show()
             
     
+# %%

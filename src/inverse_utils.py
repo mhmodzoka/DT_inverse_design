@@ -13,7 +13,8 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error
 from math import pi
 
-from forward_utils import df_to_csv
+from other_utils import df_to_csv
+
 
 spherical_harmonics = ['L0','L1','L2','L3','L4','L5','L6','L7','L8']
 

@@ -27,6 +27,7 @@ from IPython.display import Image
 from sklearn.tree import export_graphviz
 #import pydotplus
 
+from inverse_utils import *
 
 # for saving data
 def plt2matlab(figure_plt, save_path_figure_data=''):
@@ -207,32 +208,7 @@ def spectra_prediction_corrector(y):
     y_copy[y_copy<0] = 0
     return y_copy
 
-#%% SAVING ========================================================================================
-def df_to_csv(df_in,filename, scaling_factors):
-    """Undo the scaling effects and save the DataFrame to CSV"""
-    df = df_in.copy()
-        
-    if 'Area/Vol' in df.columns:
-        df['Area/Vol'] /= scaling_factors['Area/Volume']
-    
-    if 'log Area/Vol' in df.columns:
-        AV_scaled = np.exp(df['log Area/Vol']); print(AV_scaled)
-        AV = AV_scaled / scaling_factors['Area/Volume']; print(AV_scaled)
-        df['log Area/Vol'] = np.log(AV)
-        
-        if not('Area/Vol' in df.columns):
-            df['Area/Vol'] = np.exp(df['log Area/Vol'])
-        
-    if 'ShortestDim' in df.columns:
-        df['ShortestDim'] /= scaling_factors['Length']
-        
-    if 'MiddleDim' in df.columns:
-        df['MiddleDim'] /= scaling_factors['Length']
-        
-    if 'LongDim' in df.columns:
-        df['LongDim'] /= scaling_factors['Length']
-        
-    df.to_csv(path_or_buf=filename)
+
 
 
 #%% CURVE PARAMETRIZATION ==========================================================================
@@ -743,6 +719,9 @@ def gen_data_P1_P2_P3_Elzouka(X,n=10**5):
             X_gen.loc[idx_geom_here, 'Volume'] = Volume
             X_gen.loc[idx_geom_here, 'Area/Vol'] = A_V
             X_gen.loc[idx_geom_here, 'log Area/Vol'] = np.log(A_V)
+            X_gen.loc[idx_geom_here, "log ShortestDim"] = np.log(X_gen.loc[idx_geom_here, "ShortestDim"])
+            X_gen.loc[idx_geom_here, "log MiddleDim"] = np.log(X_gen.loc[idx_geom_here, "MiddleDim"])
+            X_gen.loc[idx_geom_here, "log LongDim"] = np.log(X_gen.loc[idx_geom_here, "LongDim"])
 
     end_time = time()
     print("Total Time to generate {0:,} samples: {1:.4f} seconds".format(n,end_time-start_time))

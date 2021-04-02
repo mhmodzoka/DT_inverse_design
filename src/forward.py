@@ -62,7 +62,7 @@ num_folds_repeat_DataReduction = 1
 
 # list that contains either 'scalar' or 'spectral' or both
 spectral_or_scalar_calc_all = ['scalar', 'spectral']
-spectral_or_scalar_calc_all = ['scalar']
+
 
 datetime_str = strftime("%Y%m%d_%H%M%S")
 
@@ -87,7 +87,7 @@ scaling_factors = {'Area': 10.0**12, 'Volume': 10.0**18, 'Volume/Area': 10.0**9,
 
 
 # %% Loading data ==============================================================
-data_featurized_1, interpolated_ys, spectrum_parameters = load_spectrum_param_data_mat(matlab_data_path, my_x, scaling_factors)  # this data has more "sphere" results
+data_featurized, interpolated_ys, spectrum_parameters = load_spectrum_param_data_mat(matlab_data_path, my_x, scaling_factors)  # this data has more "sphere" results
 
 # %% Data pre-processing =======================================================
 
