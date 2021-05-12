@@ -1,6 +1,6 @@
 # DT_inverse_design
 
-![image](images\forward_inverse_demo.png)
+![image](images/forward_inverse_demo.png)
 
 We show how a decision tree can perform inverse design, and return design rules.
 
